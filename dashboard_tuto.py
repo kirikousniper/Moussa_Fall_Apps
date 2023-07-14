@@ -45,14 +45,18 @@ def main():
 if __name__ == "__main__":
     main()
 
-impressions_df = pd.read_csv('impressions.csv')
-clics_df = pd.read_csv('clics.csv')
-achats_df = pd.read_csv('achats.csv')
-### Fusion des données
-donnees_fusionnees = pd.merge(impressions_df, clics_df, on='cookie_id',how="left")
-donnees = pd.merge(donnees_fusionnees, achats_df, on='cookie_id',how="left")
-base = donnees
+#Loading the data
+def load_data():
+    impressions = pd.read_csv("impressions.csv", parse_dates=['timestamp'])
+    achats = pd.read_csv("achats.csv", parse_dates=['timestamp'])
+    clics = pd.read_csv("clics.csv", parse_dates=['timestamp'])
+    merged_data1 = pd.merge(impressions, clics, on='cookie_id', how='left')
+    merged_data = pd.merge(merged_data1, achats, on='cookie_id', how='left')
+    merged_data = pd.DataFrame(merged_data)
+    return merged_data
+base=load_data()
 basefinale = pd.DataFrame(base)
+
 toggle = st.checkbox("To view data", value=True, help="Untick if you wanna see data.")
 click = st.button("Data", disabled=bool(toggle))
 if click:
@@ -168,8 +172,3 @@ with st.expander("Contact us"):
         st.text_area("Query", "Please fill in all the information or we may not be able to process your request")
 
         submit_button = st.form_submit_button(label='Send Information')
-
-
-
-
-
