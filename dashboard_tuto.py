@@ -114,7 +114,7 @@ with fig_col01:
     st.plotly_chart(fig, use_container_width=True)
 
 with fig_col02:
-    st.markdown("## Average ages by product")
+    st.markdown("##### Average ages by product")
     fig2 = px.bar(data_frame=avg_ages, x="product_id", y="age_moy")
     fig.update_layout(
         xaxis_title='Product_id',
@@ -166,7 +166,6 @@ with fig_col1:
 
 st.markdown("### Detailed Data View")
 st.write(base)
-st.write(basefinale)
 with st.expander("Contact us"):
     with st.form(key='contact', clear_on_submit=True):
         email = st.text_input('Contact Email')
